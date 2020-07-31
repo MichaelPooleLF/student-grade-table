@@ -1,5 +1,11 @@
+/* styling for header */
 header {
-  margin: 25px auto;
+  margin: 40px auto;
+}
+
+header > .row {
+  margin-top: 40px;
+  margin-bottom: 25px;
 }
 
 header > .row > * {
@@ -7,22 +13,11 @@ header > .row > * {
   padding-right: 0;
 }
 
-h3 {
+header h3 {
   text-align: right;
 }
 
-table {
-  border: 2px solid black;
-}
-
-thead {
-  background-color: lightgray;
-}
-
-.th {
-  border-right: 2px solid black;
-}
-
-td, .th {
-  border-left: 2px solid black;
+/* sytling for icons */
+.icon{
+  width: 20px;
 }

@@ -5,20 +5,20 @@ class GradeTable {
   }
 
   updateGrades(grades) {
-    if(!grades) {
-      this.noGradesElement.toggleClass("d-none");
-      return;
-    }
     var $tableBody = $("tbody");
     $tableBody.empty();
-    for (var i = 0; i < grades.length; i++) {
-      // var $tableRow = $("<tr>");
-      // var $studentName = $("<td>", {text: grades[i].name});
-      // var $courseName = $("<td>", {text: grades[i].course});
-      // var $studentGrade = $("<td>", {text: grades[i].grade});
-      $tableBody.append(this.renderGradeRow(grades[i], this.deleteGrade));
-      // $tableBody.append($tableRow.append($studentName, $courseName, $studentGrade));
+
+    if(!grades[0]) {
+      this.noGradesElement.removeClass("d-none");
+      return;
+    } else {
+      this.noGradesElement.addClass("d-none")
     }
+
+    for (var i = 0; i < grades.length; i++) {
+      $tableBody.append(this.renderGradeRow(grades[i], this.deleteGrade));
+    }
+
   }
 
   onDeleteClick(deleteGrade) {

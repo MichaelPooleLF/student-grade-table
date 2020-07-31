@@ -4,7 +4,6 @@ class GradeTable {
   }
 
   updateGrades(grades) {
-    console.log(grades);
     var $tableBody = $("tbody");
     $tableBody.empty();
     for (var i = 0; i < grades.length; i++) {

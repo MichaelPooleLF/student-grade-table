@@ -11,7 +11,11 @@
 </head>
 <body>
   <header class="container">
-    <h1 class="row">Student Grade Table</h1>
+    <div class="row align-items-center">
+      <h1 class="col-9">Student Grade Table</h1>
+      <h3 class="col-3">Average Grade <span class="badge badge-secondary"></span></h3>
+    </div>
+
   </header>
   <table class="table table-striped container">
     <thead>
@@ -26,6 +30,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
     integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
     crossorigin="anonymous"></script>
+  <script src="components/page-header.js"></script>
   <script src="components/app.js"></script>
   <script src="components/grade-tables.js"></script>
   <script src="main.js"></script>

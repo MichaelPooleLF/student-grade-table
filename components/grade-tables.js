@@ -15,4 +15,8 @@ class GradeTable {
       $tableBody.append($tableRow.append($studentName, $courseName, $studentGrade));
     }
   }
+
+  onDeleteClick(deleteGrade) {
+    this.deleteGrade = deleteGrade;
+  }
 }

@@ -8,6 +8,21 @@ class App {
     this.createGrade = this.createGrade.bind(this);
     this.handleCreateGradeError = this.handleCreateGradeError.bind(this);
     this.handleCreateGradeSuccess = this.handleCreateGradeSuccess.bind(this);
+    this.deleteGrade = this.deleteGrade.bind(this);
+    this.handleDeleteGradeError = this.handleDeleteGradeError.bind(this);
+    this.handleDeleteGradeSuccess = this.handleDeleteGradeSuccess.bind(this);
+  }
+
+  getGrades() {
+    $.ajax({
+      method: "GET",
+      url: "https://sgt.lfzprototypes.com/api/grades",
+      headers: {
+        "X-Access-Token": "HsY3ia5l"
+      },
+      error: this.handleGetGradesError,
+      success: this.handleGetGradesSuccess
+    });
   }
 
   handleGetGradesError(error) {
@@ -24,18 +39,6 @@ class App {
 
     this.pageHeader.updateAverage(averageGrade);
     this.gradeTable.updateGrades(grades);
-  }
-
-  getGrades() {
-    $.ajax({
-      method: "GET",
-      url: "https://sgt.lfzprototypes.com/api/grades",
-      headers: {
-        "X-Access-Token": "HsY3ia5l"
-      },
-      error: this.handleGetGradesError,
-      success: this.handleGetGradesSuccess
-    });
   }
 
   start() {
@@ -66,6 +69,18 @@ class App {
   }
 
   handleCreateGradeSuccess() {
+    this.getGrades();
+  }
+
+  deleteGrade(id) {
+    console.log(id);
+  }
+
+  handleDeleteGradeError(error) {
+    console.log(error);
+  }
+
+  handleDeleteGradeSuccess() {
     this.getGrades();
   }
 }

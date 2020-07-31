@@ -8,22 +8,9 @@ class App {
     this.createGrade = this.createGrade.bind(this);
     this.handleCreateGradeError = this.handleCreateGradeError.bind(this);
     this.handleCreateGradeSuccess = this.handleCreateGradeSuccess.bind(this);
-  }
-
-  handleGetGradesError(error) {
-    console.error(error);
-  }
-
-  handleGetGradesSuccess(grades) {
-    var sumGrades = 0;
-    var numberGrades = grades.length;
-    for (var i = 0; i < numberGrades; i++) {
-      sumGrades += grades[i].grade;
-    }
-    var averageGrade = sumGrades / numberGrades;
-
-    this.pageHeader.updateAverage(averageGrade);
-    this.gradeTable.updateGrades(grades);
+    this.deleteGrade = this.deleteGrade.bind(this);
+    this.handleDeleteGradeError = this.handleDeleteGradeError.bind(this);
+    this.handleDeleteGradeSuccess = this.handleDeleteGradeSuccess.bind(this);
   }
 
   getGrades() {
@@ -38,10 +25,27 @@ class App {
     });
   }
 
+  handleGetGradesError(error) {
+    console.error(error);
+  }
+
+  handleGetGradesSuccess(grades) {
+    var sumGrades = 0;
+    var numberGrades = grades.length;
+    for (var i = 0; i < numberGrades; i++) {
+      sumGrades += grades[i].grade;
+    }
+    var averageGrade = Math.round(sumGrades / numberGrades);
+
+    this.pageHeader.updateAverage(averageGrade);
+    this.gradeTable.updateGrades(grades);
+  }
+
   start() {
     this.getGrades();
     this.gradeForm.onSubmit(this.createGrade);
-    this.createGrade
+    this.createGrade;
+    this.gradeTable.onDeleteClick(this.deleteGrade);
   }
 
   createGrade(name, course, grade) {
@@ -66,6 +70,26 @@ class App {
   }
 
   handleCreateGradeSuccess() {
+    this.getGrades();
+  }
+
+  deleteGrade(id) {
+    $.ajax({
+      method: "DELETE",
+      url: "https://sgt.lfzprototypes.com/api/grades/" + id,
+      headers: {
+        "X-Access-Token": "HsY3ia5l"
+      },
+      error: this.handleDeleteGradeError,
+      success: this.handleDeleteGradeSuccess
+    })
+  }
+
+  handleDeleteGradeError(error) {
+    console.log(error);
+  }
+
+  handleDeleteGradeSuccess() {
     this.getGrades();
   }
 }

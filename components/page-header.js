@@ -4,6 +4,7 @@ class PageHeader {
   }
 
   updateAverage(newAverage) {
-    console.log(newAverage);
+    var averageGradeBadge = $("span.badge");
+    averageGradeBadge.text(newAverage);
   }
 }

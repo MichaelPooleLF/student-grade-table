@@ -1,0 +1,19 @@
+header {
+  margin: 25px auto;
+}
+
+table {
+  border: 2px solid black;
+}
+
+thead {
+  background-color: lightgray;
+}
+
+.th {
+  border-right: 2px solid black;
+}
+
+td, .th {
+  border-left: 2px solid black;
+}

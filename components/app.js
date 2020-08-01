@@ -11,8 +11,6 @@ class App {
     this.deleteGrade = this.deleteGrade.bind(this);
     this.handleDeleteGradeError = this.handleDeleteGradeError.bind(this);
     this.handleDeleteGradeSuccess = this.handleDeleteGradeSuccess.bind(this);
-    this.updateForm = this.updateForm.bind(this);
-    this.handleUpdateFormError = this.handleUpdateFormError.bind(this);
     this.handleUpdateFormSuccess = this.handleUpdateFormSuccess.bind(this);
     this.updateGrade = this.updateGrade.bind(this);
     this.handleUpdateGradeError = this.handleUpdateGradeError.bind(this);
@@ -39,12 +37,13 @@ class App {
     var sumGrades = 0;
     var numberGrades = grades.length;
     for (var i = 0; i < numberGrades; i++) {
-      sumGrades += grades[i].grade;
+      sumGrades += parseInt(grades[i].grade);
     }
     var averageGrade = Math.round(sumGrades / numberGrades);
 
     this.pageHeader.updateAverage(averageGrade);
     this.gradeTable.updateGrades(grades);
+    this.cachedGrades = grades;
   }
 
   start() {
@@ -52,7 +51,7 @@ class App {
     this.gradeForm.onSubmit(this.createGrade, this.updateGrade);
     this.createGrade;
     this.gradeTable.onDeleteClick(this.deleteGrade);
-    this.gradeTable.onUpdateClick(this.updateForm);
+    this.gradeTable.onUpdateClick(this.handleUpdateFormSuccess);
   }
 
   createGrade(name, course, grade) {
@@ -76,8 +75,9 @@ class App {
     console.error(error);
   }
 
-  handleCreateGradeSuccess() {
-    this.getGrades();
+  handleCreateGradeSuccess(newGrade) {
+    this.cachedGrades.push(newGrade);
+    this.handleGetGradesSuccess(this.cachedGrades);
   }
 
   deleteGrade(id) {
@@ -88,7 +88,7 @@ class App {
         "X-Access-Token": "HsY3ia5l"
       },
       error: this.handleDeleteGradeError,
-      success: this.handleDeleteGradeSuccess
+      success: this.handleDeleteGradeSuccess(id)
     })
   }
 
@@ -96,26 +96,15 @@ class App {
     console.log(error);
   }
 
-  handleDeleteGradeSuccess() {
+  handleDeleteGradeSuccess(idToDelete) {
     this.gradeForm.formTitle.text("Add Grade");
     this.gradeForm.submitButton.text("Add");
-    this.getGrades();
-  }
-
-  updateForm(id, name, course, grade) {
-    $.ajax({
-      method: "GET",
-      url: "https://sgt.lfzprototypes.com/api/grades",
-      headers: {
-        "X-Access-Token": "HsY3ia5l"
-      },
-      error: this.handleUpdateFormError,
-      success: this.handleUpdateFormSuccess(id, name, course, grade)
-    })
-  }
-
-  handleUpdateFormError(error) {
-    console.log(error);
+    for (var i = 0; i < this.cachedGrades.length; i++) {
+      if (this.cachedGrades[i].id === idToDelete) {
+        this.cachedGrades.splice(i, 1);
+      }
+    }
+    this.handleGetGradesSuccess(this.cachedGrades);
   }
 
   handleUpdateFormSuccess(id, name, course, grade) {
@@ -148,7 +137,14 @@ class App {
     console.log(error);
   }
 
-  handleUpdateGradeSuccess() {
-    this.getGrades();
+  handleUpdateGradeSuccess(data) {
+    for (var i = 0; i < this.cachedGrades.length; i++) {
+      if (this.cachedGrades[i].id === data.id) {
+        this.cachedGrades[i].name = data.name;
+        this.cachedGrades[i].course = data.course;
+        this.cachedGrades[i].grade = data.grade;
+      }
+    }
+    this.handleGetGradesSuccess(this.cachedGrades)
   }
 }

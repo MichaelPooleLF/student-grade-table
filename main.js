@@ -7,7 +7,6 @@ var $studentName = $(".name");
 var $courseName = $(".course");
 var $studentGrade = $(".grade");
 var $submitButton = $("button.btn-success");
-console.log($submitButton);
 var gradeTable = new GradeTable($table, $p);
 var pageHeader = new PageHeader($header);
 var gradeForm = new GradeForm($formElement, $studentName, $courseName, $studentGrade, $formTitle, $submitButton);

@@ -16,20 +16,19 @@ class GradeTable {
     }
 
     for (var i = 0; i < grades.length; i++) {
-      $tableBody.append(this.renderGradeRow(grades[i], this.updateForm, this.deleteGrade));
+      $tableBody.append(this.renderGradeRow(grades[i], this.handleUpdateFormSuccess, this.deleteGrade));
     }
-
   }
 
   onDeleteClick(deleteGrade) {
     this.deleteGrade = deleteGrade;
   }
 
-  onUpdateClick(updateForm) {
-    this.updateForm = updateForm;
+  onUpdateClick(handleUpdateFormSuccess) {
+    this.handleUpdateFormSuccess = handleUpdateFormSuccess;
   }
 
-  renderGradeRow(data, updateForm, deleteGrade) {
+  renderGradeRow(data, handleUpdateFormSuccess, deleteGrade) {
     var $tableRow = $("<tr>");
     var $studentName = $("<td>", { text: data.name });
     var $courseName = $("<td>", { text: data.course });
@@ -39,7 +38,7 @@ class GradeTable {
     var $deleteButton = $("<button>", { text:"DELETE", class:"btn btn-danger ml-1" });
 
     $deleteButton.on("click", function(){deleteGrade(data.id);});
-    $updateButton.on("click", function(){updateForm(data.id, data.name, data.course, data.grade);});
+    $updateButton.on("click", function(){handleUpdateFormSuccess(data.id, data.name, data.course, data.grade);});
 
     $tableRow.append($studentName, $courseName, $studentGrade, $buttonWrapper.append($updateButton, $deleteButton));
     return $tableRow;

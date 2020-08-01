@@ -21,3 +21,21 @@ header h3 {
 .icon{
   width: 20px;
 }
+
+@media only screen and (max-width: 992px) {
+
+  .row > * {
+    flex: auto;
+    max-width: 100%;
+    text-align: center;
+    margin-left: auto;
+  }
+
+  div.container > .row {
+    flex-wrap: wrap-reverse;
+  }
+
+  div.container > .row > div:last-child {
+    margin-bottom: 25px;
+  }
+}
